@@ -1,0 +1,22 @@
+linters-settings:
+  govet:
+    check-shadowing: false
+  gocyclo:
+    main-complexity: 30
+  misspel:
+    locale: US
+  
+linters:
+  disable-all: true
+  enable:
+    - goimports
+    - deadcode
+    - errcheck
+    - gocognit
+    - gocritic
+    - gocyclo
+    - gofmt
+    - govet
+    - misspel
+    - srariccheck
+    - whitespace
