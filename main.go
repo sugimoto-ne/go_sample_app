@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/sugimoto-ne/go_sample_app.git/config"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -17,21 +18,27 @@ func main() {
 		os.Exit(1)
 	}
 
-	p := os.Args[1]
-
-	l, err := net.Listen("tcp", ":"+p)
-
-	if err != nil {
-		log.Fatalf("failed to listen port %s: %v", p, err)
-	}
-
-	if err := run(context.Background(), l); err != nil {
+	if err := run(context.Background()); err != nil {
 		log.Printf("failed to terminate server: %v", err)
 		os.Exit(1)
 	}
 }
 
-func run(ctx context.Context, l net.Listener) error {
+func run(ctx context.Context) error {
+
+	cfg, err := config.New()
+	if err != nil {
+		return err
+	}
+
+	l, err := net.Listen("tcp", fmt.Sprintf(":%d", cfg.Port))
+	if err != nil {
+		log.Fatalf("failed to listen port %d: %v", cfg.Port, err)
+	}
+
+	url := fmt.Sprintf("http://%s", l.Addr().String())
+	log.Printf("start with: %v", url)
+
 	s := &http.Server{
 		//Addrを指定せず動的にポートを割り当てる
 		// Addr: ":18080",
@@ -60,7 +67,6 @@ func run(ctx context.Context, l net.Listener) error {
 
 	fmt.Println("waiting done")
 	<-ctx.Done()
-
 	fmt.Println("Done !!")
 	if err := s.Shutdown(context.Background()); err != nil {
 		log.Printf("failed to shutdown: %+v", err)
