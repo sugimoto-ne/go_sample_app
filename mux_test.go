@@ -25,6 +25,7 @@ func TestNewMux(t *testing.T) {
 
 	want := `{"status": "ok"}`
 	if string(got) != want {
-		t.Errorf("want %q, but got %q", want, string(got))
+		t.Errorf("want %q", want)
+		// t.Errorf("want %q, but got %q", want, string(got))
 	}
 }
