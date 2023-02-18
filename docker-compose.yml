@@ -8,9 +8,9 @@ services:
         - target=dev
     environment:
       TODO_ENV: dev
-      PORT: 8080
+      PORT: 8008
     volumes:
       - .:/app
     
     ports:
-      - "18000:8080"
+      - "18000:8008"
