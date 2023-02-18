@@ -19,26 +19,3 @@ jobs:
           golang_lint_flags: "--config=./.golangci.yml ./..."
           fail_on_error: true
           reporter: "github-pr-review"
-
-linters-settings:
-  govet:
-    check-shadowing: false
-  gocyclo:
-    main-complexity: 30
-  misspel:
-    locale: US
-  
-linters:
-  disable-all: true
-  enable:
-    - goimports
-    - deadcode
-    - errcheck
-    - gocognit
-    - gocritic
-    - gocyclo
-    - gofmt
-    - govet
-    - misspel
-    - srariccheck
-    - whitespace
