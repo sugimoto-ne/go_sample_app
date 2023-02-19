@@ -8,7 +8,7 @@ import (
 )
 
 type ListTask struct {
-	Store store.TaskStore
+	Store *store.TaskStore
 }
 
 type task struct {

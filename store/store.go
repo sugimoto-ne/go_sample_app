@@ -19,6 +19,7 @@ type TaskStore struct {
 
 func (ts *TaskStore) Add(t *entity.Task) (entity.TaskID, error) {
 	ts.LastID++
+	t.ID = ts.LastID
 	ts.Tasks[t.ID] = t
 
 	return t.ID, nil
