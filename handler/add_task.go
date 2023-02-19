@@ -5,10 +5,9 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/sugimoto-ne/go_sample_app.git/entity"
 	"github.com/sugimoto-ne/go_sample_app.git/store"
-	"github.com/vektah/gqlparser/v2/validator"
-	"github.com/vektah/gqlparser/validator"
 )
 
 type AddTask struct {
