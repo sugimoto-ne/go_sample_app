@@ -8,11 +8,30 @@ name: test
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8
+        options: >-
+          --health-cmd "mysqladmin ping -h localhost"
+          --health-interval 20s
+          --health-timeout 10s
+          --health-retries 10
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_USER: todo
+          MYSQL_PASSWORD: todo
+          MYSQL_DATABASE: todo
     steps:
     - uses: actions/setup-go@v3
       with:
         go-versions: '>=1.18'
     - uses: actions/checkout@v3
+    - run: | 
+        go install github.com/k0kubun/sqldef/cmd/mysqldef@latest
+        export PATH="$HOME/go/bin:$PATH"
+        mysqldef -u todo -p todo -h 127.0.0.1 -P 3306 todo < ./_tools/mysql/schema.sql
     - run: go test ./... -coverprofile=coverage.out
     - name: report coverage
       uses: k1LoW/octocov-action@v0
