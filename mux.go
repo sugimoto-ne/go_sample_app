@@ -11,6 +11,7 @@ import (
 	"github.com/sugimoto-ne/go_sample_app.git/handler"
 	"github.com/sugimoto-ne/go_sample_app.git/service"
 	"github.com/sugimoto-ne/go_sample_app.git/store"
+	"github.com/sugimoto-ne/go_sample_app.git/utils"
 )
 
 func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), error) {
@@ -46,6 +47,16 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		},
 	}
 	mux.Get("/tasks", lt.ServeHTTP)
+
+	cv := utils.CustomValidator()
+	ru := &handler.RegisterUser{
+		Service: &service.RegisterUser{
+			DB:   db,
+			Repo: &r,
+		},
+		Validator: cv,
+	}
+	mux.Post("/register", ru.ServeHTTP)
 
 	return mux, cleanup, nil
 }
