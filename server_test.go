@@ -16,9 +16,6 @@ func TestServer_Run(t *testing.T) {
 	if err != nil {
 		t.Fatalf("failed to listen port %v", err)
 	}
-	fmt.Println("port-------------")
-	fmt.Println(l)
-	fmt.Println("port-------------")
 
 	ctx, cancel := context.WithCancel(context.Background())
 	eg, ctx := errgroup.WithContext(ctx)
