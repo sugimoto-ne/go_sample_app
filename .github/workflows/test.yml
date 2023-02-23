@@ -8,6 +8,8 @@ name: test
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      TODO_DB_PORT: 3306
     services:
       mysql:
         image: mysql:8
