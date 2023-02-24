@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/sugimoto-ne/go_sample_app.git/auth"
 	"github.com/sugimoto-ne/go_sample_app.git/entity"
 	"github.com/sugimoto-ne/go_sample_app.git/store"
 )
@@ -14,7 +15,12 @@ type AddTask struct {
 }
 
 func (a *AddTask) AddTask(ctx context.Context, title string) (*entity.Task, error) {
+	id, ok := auth.GetUserID(ctx)
+	if !ok {
+		return nil, fmt.Errorf("user_id not found")
+	}
 	t := &entity.Task{
+		UserID: id,
 		Title:  title,
 		Status: entity.TaskStatusTodo,
 	}
