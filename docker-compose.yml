@@ -14,6 +14,8 @@ services:
       TODO_DB_DATABASE: todo
       TODO_ENV: dev
       PORT: 8008
+      TODO_REDIS_HOST: todo-redis
+      TODO_REDIS_PORT: 6379
     volumes:
       - .:/app
     ports:
@@ -41,6 +43,15 @@ services:
       - "36379:6379"
     volumes:
       - todo-redis-data:/data
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - '8001:8001'
+    volumes:
+      - ./redisinsight:/db
+    depends_on:
+      - todo-redis
+
 volumes:
   todo-db-data:
   todo-redis-data:
